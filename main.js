@@ -23,36 +23,42 @@ function pageTransition() {
         ease: "Expo.easeInOut",
         delay: 0.3,
     });
-    tl.set(".loading-screen", { left: "-100%" });
+    tl.set(".loading-screen", {
+        left: "-100%"
+    });
 }
 
 function contentAnimation() {
     var tl = gsap.timeline();
-    tl.from(".animate-this", { duration: 1, y: 30, opacity: 0, stagger: 0.4, delay: 0.2 });
+    tl.from(".animate-this", {
+        duration: 0.5,
+        x: 30,
+        opacity: 0,
+        stagger: 0.2,
+        delay: 0.2
+    });
 }
 
 $(function () {
     barba.init({
         sync: true,
 
-        transitions: [
-            {
-                async leave(data) {
-                    const done = this.async();
+        transitions: [{
+            async leave(data) {
+                const done = this.async();
 
-                    pageTransition();
-                    await delay(500);
-                    done();
-                },
-
-                async enter(data) {
-                    contentAnimation();
-                },
-
-                async once(data) {
-                    contentAnimation();
-                },
+                pageTransition();
+                await delay(500);
+                done();
             },
-        ],
+
+            async enter(data) {
+                contentAnimation();
+            },
+
+            async once(data) {
+                contentAnimation();
+            },
+        }, ],
     });
 });
